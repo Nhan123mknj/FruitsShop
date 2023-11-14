@@ -10,5 +10,6 @@ namespace FruitsShop.Models
         { }
         public DbSet<Menu> Menu { get; set; }
 		public DbSet<Post> Posts { get; set; }
+        public DbSet<Slide> Slides { get; set; }
 	}
 }

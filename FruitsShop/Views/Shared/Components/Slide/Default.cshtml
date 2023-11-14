@@ -1,0 +1,30 @@
+﻿@using FruitsShop.Models;
+@model IList<Slide>
+
+<div class="homepage-slider">
+	<!-- single home slider -->
+	 @foreach (var item in Model)
+	 {
+		<div class="single-homepage-slider" style="background-image: url(@item.Images)">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 col-lg-7 offset-lg-1 offset-xl-0">
+					<div class="hero-text">
+						<div class="hero-text-tablecell">
+							<p class="subtitle">@item.Description</p>
+							<h1>@item.Title</h1>
+							<div class="hero-btns">
+								<a href="shop.html" class="boxed-btn">@item.button1_text</a>
+									<a href="contact.html" class="bordered-btn">@item.button2_text</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	}
+
+	<!-- single home slider -->
+
+</div>
