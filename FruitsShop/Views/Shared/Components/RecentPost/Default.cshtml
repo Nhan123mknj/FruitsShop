@@ -1,0 +1,15 @@
+﻿@using FruitsShop.Models;
+@model IList<Blog>
+
+
+<div class="recent-posts">
+	<h4>Recent Posts</h4>
+		@foreach (var cc in Model)
+		{
+			var sUrl = $"/blog/{cc.Link}-{cc.Blog_ID}.html";
+	<ul>
+			<li><a href="@sUrl">@cc.Title</a></li>
+
+	</ul>
+	}
+</div>

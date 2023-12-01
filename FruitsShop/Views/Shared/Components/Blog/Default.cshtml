@@ -1,0 +1,66 @@
+﻿﻿@using FruitsShop.Models;
+@model IList<Blog>
+<style>
+    .title {
+        display: block;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* số dòng hiển thị */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .short-desc {
+        display: block;
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* số dòng hiển thị */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
+<div class="latest-news pt-150 pb-150">
+	<div class="container">
+
+		<div class="row">
+			<div class="col-lg-8 offset-lg-2 text-center">
+				<div class="section-title">
+					<h3><span class="orange-text">News</span>Blog</h3>
+                    <p>Fruitful Delights: A Journey into the World of Fresh and Flavorful Fruits</p>
+				</div>
+			</div>
+		</div>
+
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                var sUrl = $"/blog/{item.Link}-{item.Blog_ID}.html";
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-latest-news">
+                        <a href="single-news.html">
+                            <div class="latest-news-bg " style="background-image: url(@item.Images)">
+
+                                    
+
+                            </div>
+                        </a>
+                        <div class="news-text-box">
+                            <h3><a href="@sUrl">@item.Title</a></h3>
+                            <p class="blog-meta">
+                                <span class="author"><i class="fas fa-user"></i> @item.Author</span>
+                                <span class="date"><i class="fas fa-calendar"></i> @item.CreatedDate.ToString()</span>
+                            </p>
+                            <p class="excerpt">@item.Abstract</p>
+                            <a href="@sUrl" class="read-more-btn">Read more <i class="fas fa-angle-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+		<div class="row">
+			<div class="col-lg-12 text-center">
+				<a href="~/Blog" class="boxed-btn">More News</a>
+			</div>
+		</div>
+	</div>
+</div>

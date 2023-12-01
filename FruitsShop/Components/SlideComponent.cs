@@ -1,7 +1,6 @@
 ﻿
 using FruitsShop.Models;
 using Microsoft.AspNetCore.Mvc;
-using FruitsShop.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FruitsShop.Components

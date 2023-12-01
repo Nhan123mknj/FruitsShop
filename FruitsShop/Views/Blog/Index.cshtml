@@ -1,0 +1,60 @@
+﻿@model PagedList.IPagedList<FruitsShop.Models.Blog>
+@using PagedList.Mvc;
+@using PagedList;
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+</style>
+<div class="breadcrumb-section breadcrumb-bg">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 offset-lg-2 text-center">
+				<div class="breadcrumb-text">
+					<p>Organic Information</p>
+					<h1>News Article</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end breadcrumb section -->
+<!-- latest news -->
+
+<div class="latest-news mt-150 mb-150">
+	<div class="container">
+		@if (Model != null && Model.Any())
+		{
+			<div class="row">
+				@foreach (var item in Model)
+				{
+					var sUrl = $"/blog/{item.Link}-{item.Blog_ID}.html";
+
+
+					<div class="col-lg-4 col-md-6">
+
+						<div class="single-latest-news">
+							<a href="/@sUrl">
+								<div class="latest-news-bg " style="background-image: url(@item.Images)">
+								</div>
+							</a>
+							<div class="news-text-box">
+								<h3><a href="/@sUrl">@item.Title</a></h3>
+								<p class="blog-meta">
+									<span class="author"><i class="fas fa-user"></i> @item.Author</span>
+									<span class="date"><i class="fas fa-calendar"></i> @item.CreatedDate.Value.ToString("dd/MM/yyyy")</span>
+								</p>
+								<p class="excerpt">@item.Abstract</p>
+								<a href="@sUrl" class="read-more-btn">Read more <i class="fas fa-angle-right"></i></a>
+							</div>
+						</div>
+					</div>
+
+				}
+				</div>
+		}
+		<br />
+		
+	</div>
+</div>

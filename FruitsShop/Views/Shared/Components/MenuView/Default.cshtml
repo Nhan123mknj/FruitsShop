@@ -1,4 +1,5 @@
-﻿@model IList<Menu>
+﻿
+@model IList<Menu>
 
 <div class="top-header-area" id="sticker">
 	<div class="container">
@@ -8,34 +9,39 @@
 					<!-- logo -->
 					<div class="site-logo">
 						<a href="index.html">
-							<img src="~/img/logo.png" alt="">
+							<img src="~/admin/assets/img/logo.png" alt="">
 						</a>
 					</div>
 					<!-- logo -->
 					<!-- menu start -->
 					<nav class="main-menu">
 						<ul>
+
 							@foreach (var menu in Model.Where(m => m.Levels == 1).OrderBy(n => n.MenuOrder))
 							{
 								var Pid = menu.Menu_Id;
 								var Smenu = Model.Where(p => p.ParentId == Pid).OrderBy(p => p.MenuOrder).ToList();
-								@if (Smenu.Count == 0)
-								{
-									<li><a href="about.html">@menu.MenuName</a></li>
-								}
-								else
+
+								<li>@if (Smenu.Count() == 0)
+									{
+										<a href="/@menu.Alias">@menu.MenuName</a>
+									}
+								</li>
+
+								@if (Smenu.Count() > 0)
 								{
 									<li class="current-list-item">
 										<a href="#">@menu.MenuName</a>
 										<ul class="sub-menu">
 											@foreach (var smn in Smenu)
 											{
-												<li><a href="index2.html">@smn.MenuName</a></li>
+												<li><a href="/@menu.Alias">@smn.MenuName</a></li>
 											}
 										</ul>
 									</li>
 								}
 							}
+							
 							
 							<li>
 								<div class="header-icons">
