@@ -63,52 +63,10 @@
 </div>
 <!-- end features list section -->
 <!-- product section -->
-<div class="product-section mt-150 mb-150">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-8 offset-lg-2 text-center">
-				<div class="section-title">
-					<h3><span class="orange-text">Our</span> Products</h3>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, fuga quas itaque eveniet beatae optio.</p>
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-lg-4 col-md-6 text-center">
-				<div class="single-product-item">
-					<div class="product-image">
-						<a href="single-product.html"><img src="~/assets/img/products/product-img-1.jpg" alt=""></a>
-					</div>
-					<h3>Strawberry</h3>
-					<p class="product-price"><span>Per Kg</span> 85$ </p>
-					<a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 text-center">
-				<div class="single-product-item">
-					<div class="product-image">
-						<a href="single-product.html"><img src="~/assets/img/products/product-img-2.jpg" alt=""></a>
-					</div>
-					<h3>Berry</h3>
-					<p class="product-price"><span>Per Kg</span> 70$ </p>
-					<a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0 text-center">
-				<div class="single-product-item">
-					<div class="product-image">
-						<a href="single-product.html"><img src="~/assets/img/products/product-img-3.jpg" alt=""></a>
-					</div>
-					<h3>Lemon</h3>
-					<p class="product-price"><span>Per Kg</span> 35$ </p>
-					<a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+@await Component.InvokeAsync("Product_Menu")
 <!-- end product section -->
+@await Component.InvokeAsync("FruitsBestSeller")
+
 <!-- cart banner section -->
 <section class="cart-banner pt-100 pb-100">
 	<div class="container">
@@ -131,7 +89,7 @@
 				<h4>Hikan Strwaberry</h4>
 				<div class="text">Quisquam minus maiores repudiandae nobis, minima saepe id, fugit ullam similique! Beatae, minima quisquam molestias facere ea. Perspiciatis unde omnis iste natus error sit voluptatem accusant</div>
 				<div class="time-counter">
-					<div class="time-countdown clearfix" data-countdown="2045/2/01">
+					<div class="time-countdown clearfix" data-countdown="2023/10/31">
 						<div class="counter-column">
 							<div class="inner"><span class="count">00</span>Days</div>
 						</div>

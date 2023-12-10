@@ -1,13 +1,19 @@
-using FruitsShop.Models;
+﻿using FruitsShop.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 
 var builder = WebApplication.CreateBuilder(args);
 var conection = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(conection));
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(cfg => {                    // Đăng ký dịch vụ Session
+	cfg.Cookie.Name = "context";             // Đặt tên Session - tên này sử dụng ở Browser (Cookie)
+	cfg.IdleTimeout = new TimeSpan(0, 30, 0);    // Thời gian tồn tại của Session
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -20,6 +26,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseSession();
 
 app.UseRouting();
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FruitsShop.Models;
-using PagedList;
+using X.PagedList;
 
 namespace FruitsShop.Controllers
 {
@@ -14,19 +14,14 @@ namespace FruitsShop.Controllers
 			_context = context;
 		}
 
-		public IActionResult Index(int? page,int? Pagesize)
+		public IActionResult Index(int? page)
 		{
-			if(page == null)
-			{
-				page = 1;
-			}
-			if(Pagesize == null)
-			{
-				Pagesize = 10;
-			}
-			var items = _context.Blogs.Where(m => (bool)m.IsActive).OrderByDescending(i => i.Blog_ID).ToList();
+			int pageSize = 6;
+			int pageNumber=page==null||page<0?1:page.Value;
+			var items = _context.Blogs.Where(m => (bool)m.IsActive).OrderByDescending(i => i.Blog_ID).AsNoTracking();
 			ViewBag.blogComment = _context.BlogComments.Where(m => (bool)m.IsActive).ToList();
-			return View(items.ToPagedList((int)page,(int)Pagesize));
+			PagedList<Blog>lst=new PagedList<Blog>(items,pageNumber,pageSize);
+			return View(lst);
 		}
 
 		[Route("/blog/{link}-{id}.html")]

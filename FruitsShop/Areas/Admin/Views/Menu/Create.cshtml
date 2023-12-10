@@ -4,65 +4,186 @@
 
 }
 
-<main id="main" class="main" style="width:100%">
-    <div class="pagetitle">
-        <div class="container shadow p-5">
-            <div class="row pb-2">
-                <h2>Thêm mới menu</h2>
-            </div>
-            <form method="post">
-                <div asp-validation-summary="All"></div>
-                <div class="form-row">
-                    <div form-group col-md-12>
-                        <label asp-for="MenuName">MenuName</label>
-                        <input type="text" class="form-control mb-3" asp-for="MenuName" placeholder="Nhập tên menu">
-                        <span asp-validation-for="MenuName" class=" alert-danger"></span>
-                    </div>
-                </div>
+<style>
+    /* Import Google font - Poppins */
 
-                <div class="form-row">
-                    <div class="form-group col-sm-6">
-                        <label asp-for="Levels">Levels</label>
-                        <select asp-for="Levels" class="form-select" id="Levels">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="tox-form-group--maximize col-md-6">
-                    <div class="alert-danger" asp-validation-summary="ModelOnly"></div>
-                    <label asp-for="ParentId">ParentID</label>
-                    <select asp-for="ParentId" class="form-control" asp-items="@(new SelectList(ViewBag.mnList,"Value", "Text"))"></select>
-                </div>
+    .container {
+        position: relative;
+        max-width: 700px;
+        width: 100%;
+        background: #fff;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
 
-                <div class="form-group col-md-6">
-                    <label asp-for="Alias">Link</label>
-                    <input type="text" class="form-control mb-3" asp-for="Alias" placeholder="Enter Link">
-                    <span asp-validation-for="Alias" class=" alert-danger"></span>
-                </div>
+        .container header {
+            font-size: 1.5rem;
+            color: #333;
+            font-weight: 500;
+            text-align: center;
+        }
 
-                <div class="form-group col-md-6">
-                    <label asp-for="MenuOrder">MenuOrder</label>
-                    <input type="text" class="form-control mb-3" asp-for="MenuOrder" placeholder="Enter MenuOrder">
-                    <span asp-validation-for="MenuOrder" class=" alert-danger"></span>
-                </div>
+        .container .form {
+            margin-top: 30px;
+        }
 
-                <div class="form-group col-md-6">
-                    <label asp-for="Position">Position</label>
-                    <input type="text" class="form-control mb-3" asp-for="Position" placeholder="Enter Position">
-                    <span asp-validation-for="Position" class=" alert-danger"></span>
-                </div>
+    .form .input-box {
+        width: 100%;
+        margin-top: 20px;
+    }
 
-                <div class="form-group mt-5 mb-5">
-                    <label>
-                        @Html.CheckBox("IsActive", false)
-                        Hiện thị
-                    </label>
-                </div>
-                <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-plus-fill"></i>Save</button>
-                <a asp-controller="Menu" asp-action="Index" class="btn btn-lg btn-warning p-2">Quay Lại</a>
-            </form>
+    .input-box label {
+        color: #333;
+    }
+
+    .form :where(.input-box input, .select-box) {
+        position: relative;
+        height: 50px;
+        width: 100%;
+        outline: none;
+        font-size: 1rem;
+        color: #707070;
+        margin-top: 8px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 0 15px;
+    }
+
+    .input-box input:focus {
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .form .column {
+        display: flex;
+        column-gap: 15px;
+    }
+
+    .form .gender-box {
+        margin-top: 20px;
+    }
+
+    .gender-box h3 {
+        color: #333;
+        font-size: 1rem;
+        font-weight: 400;
+        margin-bottom: 8px;
+    }
+
+    .form :where(.gender-option, .gender) {
+        display: flex;
+        align-items: center;
+        column-gap: 50px;
+        flex-wrap: wrap;
+    }
+
+    .form .gender {
+        column-gap: 5px;
+    }
+
+    .gender input {
+        accent-color: rgb(130, 106, 251);
+    }
+
+    .form :where(.gender input, .gender label) {
+        cursor: pointer;
+    }
+
+    .gender label {
+        color: #707070;
+    }
+
+    .address :where(input, .select-box) {
+        margin-top: 15px;
+    }
+
+    .select-box select {
+        height: 100%;
+        width: 100%;
+        outline: none;
+        border: none;
+        color: #707070;
+        font-size: 1rem;
+    }
+
+    .form btn {
+        height: 40px;
+        width: 20%;
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 400;
+        margin-top: 30px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        background: rgb(130, 106, 251);
+    }
+
+    .form button:hover {
+        background: rgb(88, 56, 250);
+    }
+    /*Responsive*/
+
+
+</style>
+
+<section class="container">
+    <header>Chỉnh sửa menu</header>
+    <form class="form" method="post">
+
+        <div class="input-box">
+            <label asp-for="MenuName">MenuName</label>
+            <input type="text" asp-for=" MenuName" placeholder="Nhập tên menu" required />
+            <span asp-validation-for="MenuName" class=" alert-danger"></span>
         </div>
-    </div>
-   
-</main>
+
+        <div class="input-box">
+            <label asp-for="Alias">Link</label>
+            <input type="text" class="form-control mb-3" asp-for="Alias" placeholder="Enter Link">
+            <span asp-validation-for="Alias" class=" alert-danger"></span>
+        </div>
+        <div class="input-box address">
+            <label asp-for="Levels">Levels</label>
+            <div class="column">
+                <div class="select-box">
+                    <select asp-for="Levels" id="Levels">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="input-box">
+                <label asp-for="ParentId">ParentID</label>
+                <select asp-for="ParentId" class="form-control" asp-items="@(new SelectList(ViewBag.mnList,"Value", "Text"))">
+                </select>
+            </div>
+
+        </div>
+
+        <div class="input-box address">
+            <label asp-for="Position">Position</label>
+            <input type="text" class="form-control mb-3" asp-for="Position" placeholder="Position">
+            <span asp-validation-for="Position" class=" alert-danger"></span>
+        </div>
+        <div class="input-box address">
+            <label asp-for="MenuOrder">MenuOrder</label>
+            <input type="text" class="form-control mb-3" asp-for="MenuOrder" placeholder="Enter MenuOrder">
+            <span asp-validation-for="MenuOrder" class=" alert-danger"></span>
+        </div>
+        <div class="gender-box">
+            <h3>Active</h3>
+            <div class="gender-option">
+                <div class="gender">
+                    @Html.CheckBox("IsActive", false)
+                    <label for="check-male">Hiện thị</label>
+                </div>
+            </div>
+        </div>
+        <div class="button_1">
+            <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-plus-fill"></i>Lưu</button>
+            <a asp-controller="Menu" asp-action="Index" class="btn btn-lg btn-warning" p-2>Quay lại</a>
+        </div>
+    </form>
+</section>

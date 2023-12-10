@@ -1,0 +1,30 @@
+﻿@using FruitsShop.Models;
+@model IList<Fruits>
+<div class="more-products mb-150">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 offset-lg-2 text-center">
+				<div class="section-title">
+					<h3><span class="orange-text">Sản phẩm </span> Bán chạy</h3>
+					<p>Sự Ngon Ngọt Mới: Hoa Quả Tươi Sống Độc Đáo Cho Bữa Ăn</p>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			@foreach (var item in Model)
+			{
+				var sUrl = $"/Fruits/{item.Link}-{item.Fruit_ID}.html";
+				<div class="col-lg-4 col-md-6 text-center">
+					<div class="single-product-item">
+						<div class="product-image">
+							<a href="@sUrl"><img src="@item.Image" alt=""></a>
+						</div>
+						<h3>@item.NameFruit</h3>
+						<p class="product-price"><span>Per Kg</span> @item.Price </p>
+						<a href="cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng </a>
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+</div>

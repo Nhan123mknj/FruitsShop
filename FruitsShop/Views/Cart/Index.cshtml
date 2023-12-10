@@ -1,109 +1,118 @@
-﻿@model IEnumerable<Blog>
+﻿@model List<FruitsShop.Models.CartItem>
 @{
-	ViewData["Title"] = "Index";
-	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "Cart";
+	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<div class="breadcrumb-section breadcrumb-bg">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-8 offset-lg-2 text-center">
-				<div class="breadcrumb-text">
-					<p>Fresh and Organic</p>
-					<h1>Cart</h1>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- end breadcrumb section -->
-<!-- cart -->
 <div class="cart-section mt-150 mb-150">
 	<div class="container">
-		<div class="row">
-			<div class="col-lg-8 col-md-12">
-				<div class="cart-table-wrap">
-					<table class="cart-table">
-						<thead class="cart-table-head">
-							<tr class="table-head-row">
-								<th class="product-remove"></th>
-								<th class="product-image">Product Image</th>
-								<th class="product-name">Name</th>
-								<th class="product-price">Price</th>
-								<th class="product-quantity">Quantity</th>
-								<th class="product-total">Total</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr class="table-body-row">
-								<td class="product-remove"><a href="#"><i class="far fa-window-close"></i></a></td>
-								<td class="product-image"><img src="~assets/img/products/product-img-1.jpg" alt=""></td>
-								<td class="product-name">Strawberry</td>
-								<td class="product-price">$85</td>
-								<td class="product-quantity"><input type="number" placeholder="0"></td>
-								<td class="product-total">1</td>
-							</tr>
-							<tr class="table-body-row">
-								<td class="product-remove"><a href="#"><i class="far fa-window-close"></i></a></td>
-								<td class="product-image"><img src="~assets/img/products/product-img-2.jpg" alt=""></td>
-								<td class="product-name">Berry</td>
-								<td class="product-price">$70</td>
-								<td class="product-quantity"><input type="number" placeholder="0"></td>
-								<td class="product-total">1</td>
-							</tr>
-							<tr class="table-body-row">
-								<td class="product-remove"><a href="#"><i class="far fa-window-close"></i></a></td>
-								<td class="product-image"><img src="~assets/img/products/product-img-3.jpg" alt=""></td>
-								<td class="product-name">Lemon</td>
-								<td class="product-price">$35</td>
-								<td class="product-quantity"><input type="number" placeholder="0"></td>
-								<td class="product-total">1</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
+		@if (Model.Count > 0)
+		{
+			int total = 0;
+			int i = 1;
+			<div class="row">
+				<div class="col-lg-8 col-md-12">
+					<div class="cart-table-wrap">
+						<table class="cart-table">
+							<thead class="cart-table-head">
+								<tr class="table-head-row">
+									<th class="product-remove"></th>
+									<th class="product-image">Product Image</th>
+									<th class="product-name">Name</th>
+									<th class="product-price">Price</th>
+									<th class="product-quantity">Quantity</th>
+									<th class="product-total">Total</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (var cartitem in Model)
+								{
+									int thanhtien = cartitem.quantity * cartitem.product.PriceSale == 0 ? (int)cartitem.product.Price : (int)cartitem.product.PriceSale;
+									total += thanhtien;
+									<tr class="table-body-row">
+										<td class="product-remove"><a asp-route="removecart" asp-route-productid="@cartitem.product.Fruit_ID"><i class="far fa-window-close"></i></a></td>
+										<td class="product-image"><img src="assets/img/products/product-img-1.jpg" alt=""></td>
+										<td class="product-name">@cartitem.product.NameFruit</td>
+										<td class="product-price">$@(cartitem.product.PriceSale == 0 ? (int)cartitem.product.Price : (int)cartitem.product.PriceSale)</td>
+										<td class="product-quantity"><input type="number" asp-for="@cartitem.quantity" id="@($"quantity-{cartitem.product.Fruit_ID}")"></td>
+										<td class="product-total">$@thanhtien</td>
+										<td>
+											<div class="cart-buttons">
+												<a data-productid="@cartitem.product.Fruit_ID" class="boxed-btn">Update Cart</a>
+											</div>
+										</td>
+									</tr>
 
-			<div class="col-lg-4">
-				<div class="total-section">
-					<table class="total-table">
-						<thead class="total-table-head">
-							<tr class="table-total-row">
-								<th>Total</th>
-								<th>Price</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr class="total-data">
-								<td><strong>Subtotal: </strong></td>
-								<td>$500</td>
-							</tr>
-							<tr class="total-data">
-								<td><strong>Shipping: </strong></td>
-								<td>$45</td>
-							</tr>
-							<tr class="total-data">
-								<td><strong>Total: </strong></td>
-								<td>$545</td>
-							</tr>
-						</tbody>
-					</table>
-					<div class="cart-buttons">
-						<a href="cart.html" class="boxed-btn">Update Cart</a>
-						<a href="checkout.html" class="boxed-btn black">Check Out</a>
+
+								}
+							</tbody>
+						</table>
 					</div>
 				</div>
 
-				<div class="coupon-section">
-					<h3>Apply Coupon</h3>
-					<div class="coupon-form-wrap">
-						<form action="index.html">
-							<p><input type="text" placeholder="Coupon"></p>
-							<p><input type="submit" value="Apply"></p>
-						</form>
+				<div class="col-lg-4">
+					<div class="total-section">
+						<table class="total-table">
+							<thead class="total-table-head">
+								<tr class="table-total-row">
+									<th>Total</th>
+									<th>Price</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="total-data">
+									<td><strong>Subtotal: </strong></td>
+									<td>$@total</td>
+								</tr>
+								<tr class="total-data">
+									<td><strong>Total: </strong></td>
+									<td>$@total</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="cart-buttons">
+							@*--<a data-productid="@Model.product.ProductId" class="boxed-btn">Update Cart</a>--*@
+							<a asp-controller="Product" asp-action="Checkout class="boxed-btn black">Check Out</a>
+						</div>
+					</div>
+
+					<div class="coupon-section">
+						<h3>Apply Coupon</h3>
+						<div class="coupon-form-wrap">
+							<form action="index.html">
+								<p><input type="text" placeholder="Coupon"></p>
+								<p><input type="submit" value="Apply"></p>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		}
+		else
+		{
+			<p class="alert alert-danger">Giỏ hàng trống</p>
+		}
 	</div>
 </div>
+@section Scripts {
+	<script>
+		$(document).ready(function () {
+			$(".updatecartitem").click(function (event) {
+				event.preventDefault();
+				var productid = $(this).attr("data-productid");
+				var quantity = $("#quantity-" + productid).val();
+				$.ajax({
+					type: "POST",
+					url: "@Url.RouteUrl("updatecart")",
+					data: {
+						productid: productid,
+						quantity: quantity
+					},
+					success: function (result) {
+						window.location.href = "@Url.RouteUrl("cart")";
+					}
+				});
+			});
+		});
+	</script>
+}

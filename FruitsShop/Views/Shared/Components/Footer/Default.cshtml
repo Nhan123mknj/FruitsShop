@@ -1,1 +1,4 @@
-﻿ 
+﻿@model IList<Menu>
+@foreach(var item in Model){
+<li><a href="/@item.Alias">@item.MenuName</a></li>
+}

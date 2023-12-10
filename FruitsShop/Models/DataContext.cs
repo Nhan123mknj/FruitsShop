@@ -16,5 +16,10 @@ namespace FruitsShop.Models
 		public DbSet<BlogComment>   BlogComments { get; set; }
         public DbSet<AdminMenu> AdminMenus { get; set; }
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Fruits> Fruits { get; set; }
+        public DbSet<CategoryFruit> Categories { get; set; }
+        public DbSet<View_Category_Name> ViewCategories { get; set; }
+        public DbSet<Orders> Orders { get; set; }
+        public DbSet<OrderItems> OrderItems { get; set; }
     }
 }

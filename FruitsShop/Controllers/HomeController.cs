@@ -15,14 +15,14 @@ namespace FruitsShop.Controllers
 			{
 				_logger = logger;
 				_context = context;
-		}
+			}
 
 			public IActionResult Index()
 			{
 				return View();
 			}
 		
-		public IActionResult Privacy()
+			public IActionResult Privacy()
 			{
 				return View();
 			}

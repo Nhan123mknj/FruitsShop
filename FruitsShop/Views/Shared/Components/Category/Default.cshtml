@@ -1,0 +1,14 @@
+﻿@model IList<CategoryFruit>;
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="product-filters">
+			<ul>
+				@foreach(var item in Model)
+				{
+					<li><a asp-controller="Fruits" asp-action="productcategory" asp-route-id="@item.Categories_id">@item.Name_Category</a></li>
+				}
+			</ul>
+		</div>
+	</div>
+</div>

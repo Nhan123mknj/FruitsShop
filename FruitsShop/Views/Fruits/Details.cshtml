@@ -1,0 +1,82 @@
+﻿@model Fruits
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumb-section breadcrumb-bg">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 offset-lg-2 text-center">
+				<div class="breadcrumb-text">
+					<p>Chi tiết sản phẩm</p>
+					<h1>Single Product</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end breadcrumb section -->
+<!-- single product -->
+<div class="single-product mt-150 mb-150">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-5">
+				<div class="single-product-img">
+					<img src="@Model.Image" alt="">
+				</div>
+			</div>
+			<div class="col-md-7">
+				<div class="single-product-content">
+					<h3>@Model.NameFruit</h3>
+					<p class="single-product-pricing">@Model.Price<span>Per Kg</span></p>
+					<p>@Model.Detail</p>
+					<div class="single-product-form">
+						<form action="index.html">
+							<input type="number" placeholder="1">
+						</form>
+						<a asp-action="AddToCart" asp-controller ="Fruits" asp-route-id="@Model.Fruit_ID" class="cart-btn"><i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+						<p><strong>Danh mục:</strong>@Model.CategoryProduct?.Name_Category</p>
+					</div>
+					<h4>Share:</h4>
+					<ul class="product-share">
+						<li><a href=""><i class="fab fa-facebook-f"></i></a></li>
+						<li><a href=""><i class="fab fa-twitter"></i></a></li>
+						<li><a href=""><i class="fab fa-google-plus-g"></i></a></li>
+						<li><a href=""><i class="fab fa-linkedin"></i></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- end single product -->
+<!-- more products -->
+@await Component.InvokeAsync("Product_Menu")
+<!-- end more products -->
+@section scripts {
+	<script>
+		$(document).ready(function () {
+			// Function to handle the "Add to Cart" button click
+			$('#addToCartBtn').on('click', function () {
+				var productId = @Model.Fruit_ID; // Get the product ID from the model
+				var quantity = $('#quantityInput').val(); // Get the quantity from the input field
+
+				// AJAX request to the AddToCart action
+				$.ajax({
+					url: '/Fruits/Cart', // Update the URL based on your route configuration
+					type: 'POST',
+					data: { productid: productId, quantity: quantity },
+					success: function (data) {
+						// Handle success, e.g., show a confirmation message
+						alert('Product added to cart successfully!');
+					},
+					error: function () {
+						// Handle errors
+						alert('Error adding product to cart!');
+					}
+				});
+			});
+		});
+	</script>
+}

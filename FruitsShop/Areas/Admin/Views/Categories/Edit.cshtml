@@ -1,0 +1,173 @@
+﻿@model FruitsShop.Models.CategoryFruit;
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* Import Google font - Poppins */
+
+    .container {
+        position: relative;
+        max-width: 700px;
+        width: 100%;
+        background: #fff;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+        .container header {
+            font-size: 1.5rem;
+            color: #333;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .container .form {
+            margin-top: 30px;
+        }
+
+    .form .input-box {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .input-box label {
+        color: #333;
+    }
+
+    .form :where(.input-box input, .select-box) {
+        position: relative;
+        height: 50px;
+        width: 100%;
+        outline: none;
+        font-size: 1rem;
+        color: #707070;
+        margin-top: 8px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 0 15px;
+    }
+
+    .input-box input:focus {
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .form .column {
+        display: flex;
+        column-gap: 15px;
+    }
+
+    .form .gender-box {
+        margin-top: 20px;
+    }
+
+    .gender-box h3 {
+        color: #333;
+        font-size: 1rem;
+        font-weight: 400;
+        margin-bottom: 8px;
+    }
+
+    .form :where(.gender-option, .gender) {
+        display: flex;
+        align-items: center;
+        column-gap: 50px;
+        flex-wrap: wrap;
+    }
+
+    .form .gender {
+        column-gap: 5px;
+    }
+
+    .gender input {
+        accent-color: rgb(130, 106, 251);
+    }
+
+    .form :where(.gender input, .gender label) {
+        cursor: pointer;
+    }
+
+    .gender label {
+        color: #707070;
+    }
+
+    .address :where(input, .select-box) {
+        margin-top: 15px;
+    }
+
+    .select-box select {
+        height: 100%;
+        width: 100%;
+        outline: none;
+        border: none;
+        color: #707070;
+        font-size: 1rem;
+    }
+
+    .form btn {
+        height: 40px;
+        width: 20%;
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 400;
+        margin-top: 30px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        background: rgb(130, 106, 251);
+    }
+
+    .form button:hover {
+        background: rgb(88, 56, 250);
+    }
+    /*Responsive*/
+
+
+</style>
+
+<section class="container">
+    <header>Chỉnh sửa danh mục</header>
+    <form class="form" method="post" asp-action="Edit">
+        <div class="input-box">
+            <input type="text" asp-for="Categories_id" type="hidden">
+        </div>
+        <div class="input-box">
+            <label asp-for="Name_Category">Name_Category</label>
+            <input type="text" asp-for=" Name_Category" placeholder="Nhập tên danh mục" required />
+            <span asp-validation-for="Name_Category" class=" alert-danger"></span>
+        </div>
+        <div class="input-box address">
+            <label asp-for="Title">Title</label>
+            <input type="text" class="form-control mb-3" asp-for="Title" placeholder="Nhập title">
+            <span asp-validation-for="Title" class=" alert-danger"></span>
+        </div>
+        <div class="column">
+            <div class="input-box">
+                <label asp-for="ModifiedDate">Ngày sửa</label>
+                <input type="date" class="form-control mb-3" asp-for="ModifiedDate" placeholder="">
+                <span asp-validation-for="ModifiedDate" class=" alert-danger"></span>
+            </div>
+            <div class="input-box">
+                <label asp-for="ModifiedBy">Người sửa</label>
+                <input type="text" class="form-control mb-3" asp-for="ModifiedBy" placeholder="Nam">
+                <span asp-validation-for="ModifiedBy" class=" alert-danger"></span>
+            </div>
+        </div>
+        <div class="gender-box">
+            <h3>Active</h3>
+            <div class="gender-option">
+                <div class="gender">
+                    @Html.CheckBox("IsActive", Model.Is_Active)
+                    <label for="check-male">Hiện thị</label>
+                </div>
+            </div>
+        </div>
+        <div class="button_1">
+            <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-plus-fill"></i>Lưu</button>
+            <a asp-controller="Categories" asp-action="Index" class="btn btn-lg btn-warning" p-2>Quay lại</a>
+        </div>
+    </form>
+</section>
+

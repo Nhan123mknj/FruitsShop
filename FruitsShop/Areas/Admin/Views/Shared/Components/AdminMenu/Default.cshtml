@@ -36,7 +36,7 @@
             var Pid = item.AdminMenuID;
             var Smenu = Model.Where(p => p.ParentLevel == Pid).OrderBy(p => p.ItemOrder).ToList();
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#@item.ItemTarget"
+            <a class="nav-link collapsed" href="/admin/@item.ControllerName/@item.ActionName" data-target="#@item.ItemTarget"
            aria-expanded="true" aria-controls="@item.AreaName">
             <i class="fas fa-fw fa-cog"></i>
             <span>@item.ItemName</span>

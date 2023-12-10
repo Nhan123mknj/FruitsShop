@@ -8,8 +8,11 @@ namespace FruitsShop.Models
 	{
 		[Key]
 		public int Orders_id { get; set; }
-		public int Custormer_id { get; set; }
+		public int? Custormer_id { get; set; }
 		public DateTime? Order_Date { get; set; }
 		public int Total_amount { get; set; }
+
+		[ForeignKey("Custormer_id")]
+		public virtual Customer? Customers { get; set; }
 	}
 }

@@ -19,7 +19,7 @@ namespace FruitsShop.Models
 
 		public string? Author { get; set; }
 		public DateTime? CreatedDate { get; set; }
-		public bool? IsActive { get; set; }
+		public bool IsActive { get; set; }
 		public int? PostOrder { get; set; }
 		public int? MenuID { get; set; }
 		public int? Status { get; set; }
