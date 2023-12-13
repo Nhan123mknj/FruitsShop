@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using FruitsShop.Utilities;
 
 namespace FruitsShop.Areas.Admin.Controllers
 {
@@ -17,6 +18,9 @@ namespace FruitsShop.Areas.Admin.Controllers
         public IActionResult Index()
         {
             var mnList = _context.Categories.OrderBy(m => m.Categories_id).ToList();
+            if (!Functions.IsLogin())
+                return RedirectToAction("Index", "Login");
+
             return View(mnList);
 
         }

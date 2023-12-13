@@ -1,7 +1,9 @@
-﻿using FruitsShop.Models;
+﻿using Azure;
+using FruitsShop.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using X.PagedList;
 
 namespace FruitsShop.Controllers
 {
@@ -32,5 +34,21 @@ namespace FruitsShop.Controllers
 			{
 				return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 			}
+			public  IActionResult NewFruits(int? page)
+		{
+			int pageSize = 6;
+			int pageNumber = page == null || page < 0 ? 1 : page.Value;
+			var items = _context.Fruits.Where(m => (bool)m.IsActive && m.IsNew).OrderByDescending(i => i.Fruit_ID).AsNoTracking();
+			PagedList<Fruits> lst = new PagedList<Fruits>(items, pageNumber, pageSize);
+			return View(lst);
 		}
+		public IActionResult BestSeller(int? page)
+		{
+			int pageSize = 6;
+			int pageNumber = page == null || page < 0 ? 1 : page.Value;
+			var items = _context.Fruits.Where(m => (bool)m.IsActive && m.IsBestSeller).OrderByDescending(i => i.Fruit_ID).AsNoTracking();
+			PagedList<Fruits> lst = new PagedList<Fruits>(items, pageNumber, pageSize);
+			return View(lst);
+		}
+	}
 	}

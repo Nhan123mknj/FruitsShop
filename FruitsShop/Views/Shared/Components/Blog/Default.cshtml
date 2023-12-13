@@ -1,4 +1,5 @@
 ﻿﻿@using FruitsShop.Models;
+@using FruitsShop.Utilities;
 @model IList<Blog>
 <div class="latest-news pt-150 pb-150">
 	<div class="container">
@@ -15,6 +16,7 @@
         <div class="row">
             @foreach (var item in Model)
             {
+                string url = Functions.TitleSlugGeneration("blog", item.Title, item.Blog_ID);
                 var sUrl = $"/blog/{item.Link}-{item.Blog_ID}.html";
                 <div class="col-lg-4 col-md-6">
                     <div class="single-latest-news">
@@ -26,13 +28,13 @@
                             </div>
                         </a>
                         <div class="news-text-box">
-                            <h3><a href="@sUrl">@item.Title</a></h3>
+                            <h3><a href="/@url">@item.Title</a></h3>
                             <p class="blog-meta">
                                 <span class="author"><i class="fas fa-user"></i> @item.Author</span>
                                 <span class="date"><i class="fas fa-calendar"></i> @item.CreatedDate.ToString()</span>
                             </p>
                             <p class="excerpt">@item.Abstract</p>
-                            <a href="@sUrl" class="read-more-btn">Read more <i class="fas fa-angle-right"></i></a>
+                            <a href="/@url" class="read-more-btn">Read more <i class="fas fa-angle-right"></i></a>
                         </div>
                     </div>
                 </div>

@@ -13,7 +13,8 @@ namespace FruitsShop.Models
 		public string? Email { get; set; }
 		public DateTime? CreatedDate { get; set; }
 		public string? Detail { get; set; }
-		public int Blog_Id { get;set; }
+		public int? Blog_Id { get;set; }
 		public bool? IsActive { get; set; }
+		public virtual Blog? Blog { get; set; }
 	}
 }

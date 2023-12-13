@@ -1,4 +1,5 @@
 ﻿using FruitsShop.Models;
+using FruitsShop.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,9 @@ namespace FruitsShop.Areas.Admin.Controllers
             public IActionResult Index()
             {
             var mnList=_context.Menu.OrderBy(m=>m.Menu_Id).ToList();
+            if (!Functions.IsLogin())
+                return RedirectToAction("Index", "Login");
+
             return View(mnList);
 
             }
@@ -138,6 +142,25 @@ namespace FruitsShop.Areas.Admin.Controllers
         }
 
         //End Edit
+        public IActionResult ToggleIsActive(int id)
+        {
+            var menu = _context.Menu.Find(id);
+
+            if (menu != null)
+            {
+
+                menu.IsActive = !menu.IsActive;
+
+
+                _context.SaveChanges();
+
+
+                return Json(true);
+            }
+
+
+            return Json(false);
+        }
 
     }
 }

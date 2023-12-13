@@ -282,9 +282,9 @@
                                              width: 120px;
                                              height: 80px;">
                                     </td>
-                                        <td>@item.CreatedDate</td>
+                                        <td>@item.CreatedDate.Value.ToString("dd/MM/yyyy")</td>
                                         <td>@item.CreatedBy</td>
-                                        <td>@item.ModifiedDate</td>
+                                        <td>@item.ModifiedDate.Value.ToString("dd/MM/yyyy")</td>
                                         <td>@item.ModifiedBy</td>
                                         <td>@item.Status</td>
                                         <td>@Html.CheckBoxFor(modelItem => item.Is_Active)</td>

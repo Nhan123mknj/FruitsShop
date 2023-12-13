@@ -4,6 +4,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <style>
     .fixed-box {
         display: -webkit-box;
@@ -302,9 +303,25 @@
                                         </td>
                                         <td>@item.Link</td>
                                         <td>@item.Star</td>
-                                        <td>@Html.CheckBoxFor(modelItem => item.IsActive)</td>
-                                        <td>@Html.CheckBoxFor(modelItem => item.IsBestSeller)</td>
-                                        <td>@Html.CheckBoxFor(modelItem => item.IsNew)</td>
+                                        <td>
+                                            <div class="custom-control custom-switch">
+                                            <input type="checkbox" class="custom-control-input" id="isActiveCheckbox_@item.Fruit_ID" data-id="@item.Fruit_ID" data-isactive="@item.IsActive.ToString().ToLower()" checked="@item.IsActive" />
+                                            <label class="custom-control-label" for="isActiveCheckbox_@item.Fruit_ID"></label>
+                                             </div>
+
+                                    </td>
+                                        <td>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="isActiveCheckbox_@item.Fruit_ID" data-id="@item.Fruit_ID" data-isactive="@item.IsActive.ToString().ToLower()" checked="@item.IsBestSeller" />
+                                                <label class="custom-control-label" for="isActiveCheckbox_@item.Fruit_ID"></label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="isActiveCheckbox_@item.Fruit_ID" data-id="@item.Fruit_ID" data-isactive="@item.IsActive.ToString().ToLower()" checked="@item.IsNew" />
+                                                <label class="custom-control-label" for="isActiveCheckbox_@item.Fruit_ID"></label>
+                                            </div>
+                                        </td>
                                         <td>
                                             <a asp-area="Admin" asp-controller="Product_Fruits" asp-action="Edit"
                                            asp-route-id="@item.Fruit_ID" class="btn btn-primary btn-sm"
@@ -314,6 +331,7 @@
                                         </td>
                                     </tr>
                                 }
+                                
                             </tbody>
                         </table>
                     </div>
@@ -367,6 +385,58 @@
     </script>
 }
 
+<script>
+    $(document).ready(function () {
+        $(".custom-control-input").change(function () {
+            var _id = $(this).data("id");
+            var isChecked = $(this).prop("checked");
 
+            // Gửi yêu cầu AJAX để cập nhật trạng thái IsActive
+            $.ajax({
+                url: "/admin/Product_Fruits/toggleIsActive",
+                type: "POST",
+                data: { id: _id, isActive: isChecked },
+                success: function (result) {
+                    if (result) {
+                        // Cập nhật giao diện người dùng
+                        $(".custom-control-input[data-id='" + _id + "']").data("isactive", isChecked);
+                        toastr.success('Đã cập nhật trạng thái');
+                    } else {
+                        toastr.error('Cập nhật không thành công');
+                    }
+                }
+            });
+             $.ajax({
+                url: "/admin/Product_Fruits/toggleIsActive",
+                type: "POST",
+                data: { id: _id, isActive: isChecked },
+                success: function (result) {
+                    if (result) {
+                        // Cập nhật giao diện người dùng
+                        $(".custom-control-input[data-id='" + _id + "']").data("isactive", isChecked);
+                        toastr.success('Đã cập nhật trạng thái');
+                    } else {
+                        toastr.error('Cập nhật không thành công');
+                    }
+                }
+            });
+             $.ajax({
+                url: "/admin/Product_Fruits/toggleIsActive",
+                type: "POST",
+                data: { id: _id, isActive: isChecked },
+                success: function (result) {
+                    if (result) {
+                        // Cập nhật giao diện người dùng
+                        $(".custom-control-input[data-id='" + _id + "']").data("isactive", isChecked);
+                        toastr.success('Đã cập nhật trạng thái');
+                    } else {
+                        toastr.error('Cập nhật không thành công');
+                    }
+                }
+            });
+        });
+    });
+
+</script>
 
 

@@ -4,6 +4,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     
 }
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <div id="content-wrapper" class="d-flex flex-column">
 
@@ -275,13 +276,18 @@
                                     <td>@item.Levels</td>
                                     <td>@item.ParentId</td>
                                     <td>@item.MenuOrder</td>
-                                        <td>@Html.CheckBoxFor(modelItem => item.IsActive)</td>
+                                        <td>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="isActiveCheckbox_@item.Menu_Id" data-id="@item.Menu_Id" data-isactive="@item.IsActive.ToString().ToLower()" checked="@item.IsActive" />
+                                                <label class="custom-control-label" for="isActiveCheckbox_@item.Menu_Id"></label>
+                                            </div>
+                                        </td>
+                                       
                                         <td>
                                             <a asp-area="Admin" asp-controller="Menu" asp-action="Edit"
                                            asp-route-id="@item.Menu_Id" class="btn btn-primary btn-sm"
                                                title="Sửa nội dung bài viết"><i class="fa-solid fa-square-pen"></i></a>
-                                            <a asp-area="Admin" asp-controller="Menu" asp-action="Delete"
-                                           asp-route-id="@item.Menu_Id" class="btn btn-danger btn-sm"
+                                            <a data-id="@item.Menu_Id" class="btn btn-danger btn-sm btn-delete"
                                                title="Xóa thông tin bài viết"><i class="fa-solid fa-trash"></i></a>
                                         </td>
                                 </tr>
@@ -310,4 +316,59 @@
 </div>
 
 
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".btn-delete").click(function (e) {
+                // Prevent the default behavior of the anchor element
+                e.preventDefault();
 
+                _id = $(this).data("id");
+
+                if (confirm("Bạn có muốn xóa không")) {
+                    $.ajax({
+                        url: "/Admin/Menu/Delete",
+                        type: "POST",
+                        data: { id: _id },
+                        success: function (result) {
+                            if (result) {
+                                // Remove the table row without reloading the page
+                                $("#tr_" + _id).remove();
+                                toastr.success('Xóa thành công');
+                            }
+                            else {
+                                toastr.error('Xóa không thành công');
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+
+<script>
+    $(document).ready(function () {
+        $(".custom-control-input").change(function () {
+            var _id = $(this).data("id");
+            var isChecked = $(this).prop("checked");
+
+            // Gửi yêu cầu AJAX để cập nhật trạng thái IsActive
+            $.ajax({
+                url: "/admin/Menu/toggleIsActive",
+                type: "POST",
+                data: { id: _id, isActive: isChecked },
+                success: function (result) {
+                    if (result) {
+                        // Cập nhật giao diện người dùng
+                        $(".custom-control-input[data-id='" + _id + "']").data("isactive", isChecked);
+                        toastr.success('Đã cập nhật trạng thái');
+                    } else {
+                        toastr.error('Cập nhật không thành công');
+                    }
+                }
+            });
+        });
+    });
+
+</script>

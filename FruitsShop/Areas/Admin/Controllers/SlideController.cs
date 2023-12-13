@@ -1,4 +1,5 @@
 ﻿using FruitsShop.Models;
+using FruitsShop.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,9 @@ namespace FruitsShop.Areas.Admin.Controllers
         public IActionResult Index()
         {
             var slList = _context.Slides.OrderBy(m => m.SlideId).ToList();
+            if (!Functions.IsLogin())
+                return RedirectToAction("Index", "Login");
+
             return View(slList);
         }
         public IActionResult Create()

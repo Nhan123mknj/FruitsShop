@@ -1,4 +1,4 @@
-﻿
+﻿@using FruitsShop.Utilities
 @model IList<Menu>
 
 <div class="top-header-area" id="sticker">
@@ -21,7 +21,7 @@
 							{
 								var Pid = menu.Menu_Id;
 								var Smenu = Model.Where(p => p.ParentId == Pid).OrderBy(p => p.MenuOrder).ToList();
-
+								
 								<li>@if (Smenu.Count() == 0)
 									{
 										<a href="/@menu.Alias">@menu.MenuName</a>

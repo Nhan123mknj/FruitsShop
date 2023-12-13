@@ -17,7 +17,7 @@ namespace FruitsShop.Controllers
 		}
 
 		[HttpPost]
-		public bool Create(string name, string phone, string email, string message)
+		public IActionResult Create(string name, string phone, string email, string message)
 		{
 			try
 			{
@@ -29,11 +29,11 @@ namespace FruitsShop.Controllers
 				contact.CreatedDate = DateTime.Now;
 				_context.Add(contact);
 				_context.SaveChangesAsync();
-				return true;
+				return Json(new { status = true });
 			}
 			catch
 			{
-				return false;
+				return Json(new { status = false });
 			}
 		}
 	}

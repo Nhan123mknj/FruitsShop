@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <style>
     .fixed-box {
         display: -webkit-box;
@@ -192,7 +192,7 @@
                         <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
                     </div>
                 </li>
-
+                
                 <div class="topbar-divider d-none d-sm-block"></div>
 
                 <!-- Nav Item - User Information -->
@@ -245,7 +245,7 @@
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">
-                        <a type="button" class="btn btn-primary btn-icon-split" asp-area="Admin" asp-controller="Product_Fruits" asp-action="Create">
+                        <a type="button" class="btn btn-primary btn-icon-split" asp-area="Admin" asp-controller="Blogs" asp-action="Create">
                             <span class="icon text-white-50">
                                 <i class="fa-solid fa-plus"></i>
                             </span>
@@ -301,13 +301,18 @@
                                         </td>
                                         <td>@item.Link</td>
                                         <td>@item.Author</td>
-                                        <td>@item.CreatedDate</td>
+                                        <td>@item.CreatedDate.Value.ToString("dd/MM/yyyy")</td>
                                         <td>
                                             <div class="fixed-box">
                                                 @item.Contents
                                             </div>
                                         </td>
-                                        <td>@Html.CheckBoxFor(modelItem => item.IsActive)</td>
+                                        <td>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="isActiveCheckbox_@item.Blog_ID" data-id="@item.Blog_ID" data-isactive="@item.IsActive.ToString().ToLower()" checked="@item.IsActive" />
+                                                <label class="custom-control-label" for="isActiveCheckbox_@item.Blog_ID"></label>
+                                            </div>
+                                        </td>
 
                                         <td>
                                             <a asp-area="Admin" asp-controller="Blogs" asp-action="Edit"
@@ -370,7 +375,31 @@
         });
     </script>
 }
+<script>
+    $(document).ready(function () {
+        $(".custom-control-input").change(function () {
+            var _id = $(this).data("id");
+            var isChecked = $(this).prop("checked");
 
+            // Gửi yêu cầu AJAX để cập nhật trạng thái IsActive
+            $.ajax({
+                url: "/admin/Blogs/toggleIsActive",
+                type: "POST",
+                data: { id: _id, isActive: isChecked },
+                success: function (result) {
+                    if (result) {
+                        // Cập nhật giao diện người dùng
+                        $(".custom-control-input[data-id='" + _id + "']").data("isactive", isChecked);
+                        toastr.success('Đã cập nhật trạng thái');
+                    } else {
+                        toastr.error('Cập nhật không thành công');
+                    }
+                }
+            });
+        });
+    });
+
+</script>
 
 
 

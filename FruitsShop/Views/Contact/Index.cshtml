@@ -3,13 +3,13 @@
 	ViewData["Title"] = "Index";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <div class="breadcrumb-section breadcrumb-bg">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8 offset-lg-2 text-center">
 				<div class="breadcrumb-text">
-					<p>Get 24/7 Support</p>
+					<p>Hỗi trợ 24/7</p>
 					<h1>Contact us</h1>
 				</div>
 			</div>
@@ -23,8 +23,8 @@
 		<div class="row">
 			<div class="col-lg-8 mb-5 mb-lg-0">
 				<div class="form-title">
-					<h2>Have you any question?</h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur, ratione! Laboriosam est, assumenda. Perferendis, quo alias quaerat aliquid. Corporis ipsum minus voluptate? Dolore, esse natus!</p>
+					<h2>Bạn có câu hỏi gì cho chúng tôi?</h2>
+					<p>Dịch vụ hỗ trợ khách hàng của chúng tôi luôn sẵn sàng để giải đáp mọi thắc mắc và hỗ trợ bạn một cách nhanh chóng. Chúng tôi cam kết đưa đến bạn trải nghiệm chăm sóc khách hàng tốt nhất, vì khách hàng là ưu tiên hàng đầu của chúng tôi</p>
 				</div>
 				<div id="form_status"></div>
 				<div class="contact-form">
@@ -48,12 +48,12 @@
 			<div class="col-lg-4">
 				<div class="contact-form-wrap">
 					<div class="contact-form-box">
-						<h4><i class="fas fa-map"></i> Shop Address</h4>
-						<p>34/8, East Hukupara <br> Gifirtok, Sadan. <br> Country Name</p>
+						<h4><i class="fas fa-map"></i> Địa chỉ Shop</h4>
+						<p>182 Lê Duẩn, Bến Thủy <br> Thành phố Vinh <br> Nghệ An</p>
 					</div>
 					<div class="contact-form-box">
-						<h4><i class="far fa-clock"></i> Shop Hours</h4>
-						<p>MON - FRIDAY: 8 to 9 PM <br> SAT - SUN: 10 to 8 PM </p>
+						<h4><i class="far fa-clock"></i> Giờ mở cửa</h4>
+						<p>Thứ 2 - Thứ 6 : 8 to 9 PM <br> Thứ 7 - Chủ nhật: 10 to 8 PM </p>
 					</div>
 					<div class="contact-form-box">
 						<h4><i class="fas fa-address-book"></i> Contact</h4>
@@ -94,7 +94,7 @@
 					type: "POST",
 					data: { name: _name, phone: _phone, email: _email, message: _message },
 					success: function (result) {
-						if (result) {
+						if (result != null) {
 							$("#name").val("");
 							$("#phone").val("");
 							$("#email").val("");
@@ -102,11 +102,11 @@
 							toastr.success('Gửi thành công');
 						}
 						else {
-							toastr.error('Gửi không thành công');
+							toastr.success('Gửi không thành công');
 						}
 					}
-				})
+				});
 			});
-		})
+		});
 	</script>
-	}
+}

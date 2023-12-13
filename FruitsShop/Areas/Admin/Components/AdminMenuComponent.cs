@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 
 
-namespace startup.Areas.Admin.Components
+namespace FruitsShop.Areas.Admin.Components
 
 {
     [ViewComponent(Name = "AdminMenu")]

@@ -121,7 +121,7 @@ namespace FruitsShop.Controllers
 
 
 		// Hiện thị giỏ hàng
-		[Route("/cart", Name = "cart")]
+		[Route("Fruits/cart", Name = "cart")]
 		public IActionResult Cart()
 		{
 			return View(GetCartItems());

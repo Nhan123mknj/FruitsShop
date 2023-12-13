@@ -1,0 +1,15 @@
+﻿@using FruitsShop.Models;
+@model IList<CategoryFruit>
+@using FruitsShop.Utilities;
+
+<div class="tag-section">
+	<h4>Tags</h4>
+		<ul>
+			@foreach(var item in Model)
+			{
+				
+				var sUrl = $"/Fruits/productcategory/{item.Categories_id}.html";
+			<li><a href="@sUrl">@item.Name_Category</a></li>
+			}
+		</ul>
+	</div>

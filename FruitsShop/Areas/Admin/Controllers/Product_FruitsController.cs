@@ -1,4 +1,5 @@
 ﻿using FruitsShop.Models;
+using FruitsShop.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,9 @@ namespace FruitsShop.Areas.Admin.Controllers
         public IActionResult Index()
         {
             var pdList = _context.Fruits.Include(f => f.CategoryProduct).OrderBy(m => m.Fruit_ID).ToList();
+            if (!Functions.IsLogin())
+                return RedirectToAction("Index", "Login");
+
             return View(pdList);
         }
         public IActionResult Create()
@@ -137,6 +141,50 @@ namespace FruitsShop.Areas.Admin.Controllers
                 return RedirectToAction("Index"); // Chuyển hướng đến trang danh sách menu
             }
             return View(pd); // Hiển thị biểu mẫu chỉnh sửa với lỗi kiểm tra
+        }
+        public IActionResult ToggleIsActive(int id)
+        {
+            var menu = _context.Fruits.Find(id);
+
+            if (menu != null)
+            {
+                menu.IsActive = !menu.IsActive;
+                _context.SaveChanges();
+
+                return Json(true);
+            }
+
+            return Json(false);
+        }
+
+        public IActionResult ToggleIsBestSeller(int id)
+        {
+            var menu = _context.Fruits.Find(id);
+
+            if (menu != null)
+            {
+                menu.IsBestSeller = !menu.IsBestSeller;
+                _context.SaveChanges();
+
+                return Json(true);
+            }
+
+            return Json(false);
+        }
+
+        public IActionResult ToggleIsNew(int id)
+        {
+            var menu = _context.Fruits.Find(id);
+
+            if (menu != null)
+            {
+                menu.IsNew = !menu.IsNew;
+                _context.SaveChanges();
+
+                return Json(true);
+            }
+
+            return Json(false);
         }
     }
 }

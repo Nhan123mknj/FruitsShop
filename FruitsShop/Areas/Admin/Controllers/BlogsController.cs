@@ -1,4 +1,5 @@
 ﻿using FruitsShop.Models;
+using FruitsShop.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,10 @@ namespace FruitsShop.Areas.Admin.Controllers
             public IActionResult Index()
             {
                 var mnList = _context.Blogs.OrderBy(m => m.Blog_ID).ToList();
-                return View(mnList);
+            if (!Functions.IsLogin())
+                return RedirectToAction("Index", "Login");
+
+            return View(mnList);
 
             }
             // GET: Hiển thị form để tạo menu mới
@@ -138,7 +142,25 @@ namespace FruitsShop.Areas.Admin.Controllers
                 return View(mn); // Hiển thị biểu mẫu chỉnh sửa với lỗi kiểm tra
             }
 
-            //End Edit
+        //End Edit
+        public IActionResult ToggleIsActive(int id)
+        {
+            var blog = _context.Blogs.Find(id);
 
+            if (blog != null)
+            {
+
+               blog.IsActive = !blog.IsActive;
+
+
+                _context.SaveChanges();
+
+
+                return Json(true);
+            }
+
+
+            return Json(false);
         }
+    }
     }

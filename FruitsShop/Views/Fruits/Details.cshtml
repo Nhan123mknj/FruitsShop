@@ -30,12 +30,12 @@
 				<div class="single-product-content">
 					<h3>@Model.NameFruit</h3>
 					<p class="single-product-pricing">@Model.Price<span>Per Kg</span></p>
-					<p>@Model.Detail</p>
+					<p>@Model.Description</p>
 					<div class="single-product-form">
 						<form action="index.html">
 							<input type="number" placeholder="1">
 						</form>
-						<a asp-action="AddToCart" asp-controller ="Fruits" asp-route-id="@Model.Fruit_ID" class="cart-btn"><i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+						<a class="cart-btn" data-product-id="@Model.Fruit_ID"><i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
 						<p><strong>Danh mục:</strong>@Model.CategoryProduct?.Name_Category</p>
 					</div>
 					<h4>Share:</h4>
@@ -48,35 +48,60 @@
 				</div>
 			</div>
 		</div>
+		<div class="row" style="width:80%">
+			<div class="single-article-section">
+				<div class="single-article-text" style="padding-top:50px;">
+
+
+					<h4>Mô tả sản phẩm:</h4>
+					<p>
+						Chào mừng đến với thế giới của Cam Mỹ - biểu tượng của sự tươi mới và ngon miệng! Được trồng và chăm sóc tận tâm tại những vùng đất màu mỡ ở Mỹ, Cam Mỹ không chỉ là một loại trái cây, mà còn là một trải nghiệm ẩm thực đẳng cấp.
+					</p>
+
+					<p>
+						Cam Mỹ có vỏ mỏng, màu cam rực rỡ, và mang đến hương thơm tinh tế của đất trời Mỹ. Chúng là nguồn cung cấp vitamin C lý tưởng, giúp tăng cường hệ thống miễn dịch và giữ cho làn da luôn trắng sáng và khỏe mạnh.
+					</p>
+
+					<p>
+						Tại cửa hàng của chúng tôi, chúng tôi tự hào giới thiệu Cam Mỹ với chất lượng tuyệt vời nhất. Mỗi quả cam được lựa chọn kỹ lưỡng từ các vườn cam chất lượng cao, nơi mà ánh nắng mặt trời và đất phong phú tạo nên điều kiện lý tưởng cho sự phát triển.
+					</p>
+
+					<p>
+						Với hương vị độc đáo, Cam Mỹ không chỉ là sự kết hợp hoàn hảo cho bữa ăn hàng ngày mà còn là lựa chọn tuyệt vời cho các món tráng miệng sáng tạo. Bạn có thể thưởng thức chúng tươi ngon hoặc biến tấu thành nước ép, salad, và nhiều món ăn khác.
+					</p>
+
+					<p>
+						Hãy tận hưởng hương vị tự nhiên và tinh tế của Cam Mỹ ngay hôm nay! Đặt hàng ngay để nhận được nguồn dinh dưỡng tốt nhất từ loại cam chất lượng cao nhất.
+					</p>
+				</div>
+
+			</div>
+		</div>
 	</div>
 </div>
+
 <!-- end single product -->
 <!-- more products -->
 @await Component.InvokeAsync("Product_Menu")
 <!-- end more products -->
-@section scripts {
-	<script>
-		$(document).ready(function () {
-			// Function to handle the "Add to Cart" button click
-			$('#addToCartBtn').on('click', function () {
-				var productId = @Model.Fruit_ID; // Get the product ID from the model
-				var quantity = $('#quantityInput').val(); // Get the quantity from the input field
+<script>
+	$(document).ready(function () {
+		$('.cart-btn').on('click', function () {
+			var productId = $(this).data('product-id');
 
-				// AJAX request to the AddToCart action
-				$.ajax({
-					url: '/Fruits/Cart', // Update the URL based on your route configuration
-					type: 'POST',
-					data: { productid: productId, quantity: quantity },
-					success: function (data) {
-						// Handle success, e.g., show a confirmation message
-						alert('Product added to cart successfully!');
-					},
-					error: function () {
-						// Handle errors
-						alert('Error adding product to cart!');
-					}
-				});
+			// Make an AJAX request to the AddToCart action
+			$.ajax({
+				url: '/addcart/' + productId,
+				type: 'GET',
+				success: function (data) {
+					// Handle success (if needed)
+					console.log('Item added to cart successfully');
+				},
+				error: function (error) {
+					// Handle errors (if needed)
+					console.error('Error adding item to cart', error);
+				}
 			});
 		});
-	</script>
-}
+	});
+</script>

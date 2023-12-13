@@ -39,5 +39,25 @@ namespace FruitsShop.Controllers
 			ViewBag.blogComment = _context.BlogComments.Where(i => i.Blog_Id == id && (bool)i.IsActive).OrderByDescending(i => i.Comment_Id).ToList();
 			return View(post);
 		}
+		[HttpPost]
+		public bool Create(int? id,string name,string email, string message)
+		{
+			try
+			{
+				BlogComment comment = new BlogComment();
+				comment.Blog_Id= id;
+				comment.Name = name;
+				comment.Email = email;
+				comment.Detail = message;
+				comment.CreatedDate = DateTime.Now;
+				_context.Add(comment);
+				_context.SaveChangesAsync();
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
+		}
 	}
 }

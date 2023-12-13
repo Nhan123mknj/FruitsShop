@@ -1,7 +1,7 @@
 ﻿@model List<FruitsShop.Models.CartItem>
 @{
     ViewData["Title"] = "Cart";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="cart-section mt-150 mb-150">
@@ -37,7 +37,7 @@
 								<td class="product-total">$@thanhtien</td>
 										<td>
 											<div class="cart-buttons">
-												<a data-productid="@cartitem.product.Fruit_ID" class="boxed-btn">Update Cart</a>
+												<a data-productid="@cartitem.product.Fruit_ID" class="boxed-btn updatecartitem">Update Cart</a>
 											</div>
 										</td>
 								</tr>
