@@ -8,7 +8,7 @@
 			@foreach(var item in Model)
 			{
 				
-				var sUrl = $"/Fruits/productcategory/{item.Categories_id}.html";
+				var sUrl = $"/Fruits/productcategory/{item.Categories_id}";
 			<li><a href="@sUrl">@item.Name_Category</a></li>
 			}
 		</ul>

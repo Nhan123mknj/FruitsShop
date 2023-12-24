@@ -11,7 +11,7 @@ namespace FruitsShop.Models
 		public string? Name_customer { get; set; }
 		public string? Email { get; set; }
 		public string? Address { get; set; }
-		public string? Phonen_number { get; set; }
+		public string? Phone_number { get; set; }
 		public bool? Is_Active { get; set; }
 	}
 }

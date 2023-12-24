@@ -17,7 +17,7 @@ namespace FruitsShop.Models
 
 		public string? Message { get; set; }
 
-		public int? IsRead { get; set; }
+		public bool Is_Read { get; set; }
 
 		public DateTime? CreatedDate { get; set; }
 

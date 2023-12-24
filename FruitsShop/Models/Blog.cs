@@ -25,5 +25,7 @@ namespace FruitsShop.Models
 		public int? Status { get; set; }
 		public int? Category_id { get; set; }
 		public int? FruitID { get; set; }
-	}
+
+
+    }
 }

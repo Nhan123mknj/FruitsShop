@@ -1,29 +1,34 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using elFinder.NetCore.Drivers.FileSystem;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
+﻿using elFinder.NetCore.Drivers.FileSystem;
+using elFinder.NetCore;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
-namespace elFinder.NetCore.Web.Controllers
+namespace FruitsShop.Areas.Admin.Controllers
 {
-    // [Authorize] - bỏ comment user phải đăng nhập mới dùng được
     [Area("Admin")]
     [Route("/Admin/el-finder-file-system")]
     public class FileSystemController : Controller
     {
-        IWebHostEnvironment _env;
-        public FileSystemController(IWebHostEnvironment env) => _env = env;
 
-        // Url để client-side kết nối đến backend
-        // /el-finder-file-system/connector
+
+        readonly IWebHostEnvironment _env;
+        public FileSystemController(IWebHostEnvironment env) => _env = env;
         [Route("connector")]
         public async Task<IActionResult> Connector()
         {
             var connector = GetConnector();
-            return await connector.ProcessAsync(Request);
+            var result = await connector.ProcessAsync(Request);
+            if (result is JsonResult)
+            {
+                 var json = result as JsonResult;
+                return Content(JsonSerializer.Serialize(json.Value), json.ContentType);
+                
+            }
+            else
+            {
+                return Json(result);
+            }
         }
 
         // Địa chỉ để truy vấn thumbnail

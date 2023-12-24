@@ -1,0 +1,133 @@
+﻿@using FruitsShop.Models
+@model List<Contact>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+    <p class="mb-4">
+        DataTables is a third party plugin that is used to generate the demo table below.
+        For more information about DataTables, please visit the <a target="_blank"
+                                                                   href="https://datatables.net">official DataTables documentation</a>.
+    </p>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Thứ tự</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Messenger</th>
+                            <th>Ngày tạo</th>
+                            <th>Người tạo</th>
+                            <th>IsRead</th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var i = 1;
+                        }
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <th scope="row">@(i++)</th>
+                                <td>
+                                    @item.Email
+                                </td>
+                                <td>@item.Phone</td>
+                                <td>
+                                    @item.Message
+                                </td>
+                                <td>@item.CreatedDate</td>
+                                <td>@item.Name</td>
+
+                                <td>
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="isActiveCheckbox_@item.ContactId" data-id="@item.ContactId" data-isactive="@item.Is_Read.ToString().ToLower()" checked="@item.Is_Read" />
+                                        <label class="custom-control-label" for="isActiveCheckbox_@item.ContactId"></label>
+                                    </div>
+
+                                </td>
+                                <td>
+                                    <a asp-area="Admin" asp-controller="Contact" asp-action="Details"
+                                   asp-route-id="@item.ContactId" class="btn btn-primary btn-sm"
+                                       title="Sửa nội dung bài viết"><i class="fa-solid fa-eye"></i></a>
+                                    <a data-id="@item.ContactId" class="btn btn-danger btn-sm btn-delete"
+                                       title="Xóa sản phẩm"><i class="fa-solid fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".btn-delete").click(function (e) {
+                // Prevent the default behavior of the anchor element
+                e.preventDefault();
+
+                _id = $(this).data("id");
+
+                if (confirm("Bạn có muốn xóa không")) {
+                    $.ajax({
+                        url: "/Admin/Contact/Delete",
+                        type: "POST",
+                        data: { id: _id },
+                        success: function (result) {
+                            if (result) {
+                                // Remove the table row without reloading the page
+                                $("#tr_" + _id).remove();
+                                toastr.success('Xóa thành công');
+                            }
+                            else {
+                                toastr.error('Xóa không thành công');
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+<script>
+    $(document).ready(function () {
+        $(".custom-control-input").change(function () {
+            var _id = $(this).data("id");
+            var isChecked = $(this).prop("checked");
+
+            // Gửi yêu cầu AJAX để cập nhật trạng thái IsActive
+            $.ajax({
+                url: "/admin/Contact/toggleIsActive",
+                type: "POST",
+                data: { id: _id, isActive: isChecked },
+                success: function (result) {
+                    if (result) {
+                        // Cập nhật giao diện người dùng
+                        $(".custom-control-input[data-id='" + _id + "']").data("isactive", isChecked);
+                        toastr.success('Đã cập nhật trạng thái');
+                    } else {
+                        toastr.error('Cập nhật không thành công');
+                    }
+                }
+            });
+        });
+    });
+
+</script>

@@ -3,7 +3,18 @@
     ViewData["Title"] = "Cart";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<div class="breadcrumb-section breadcrumb-bg">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 offset-lg-2 text-center">
+				<div class="breadcrumb-text">
+					<p>Fresh and Organic</p>
+					<h1>Cart</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <div class="cart-section mt-150 mb-150">
 	<div class="container">
 		 @if (Model.Count > 0)
@@ -30,7 +41,7 @@
 									total += thanhtien;
 								<tr class="table-body-row">
 									<td class="product-remove"><a asp-route="removecart" asp-route-productid="@cartitem.product.Fruit_ID"><i class="far fa-window-close"></i></a></td>
-									<td class="product-image"><img src="assets/img/products/product-img-1.jpg" alt=""></td>
+									<td class="product-image"><img src="@cartitem.product.Image" alt=""></td>
 									<td class="product-name">@cartitem.product.NameFruit</td>
 										<td class="product-price">$@(cartitem.product.PriceSale == 0 ? (int)cartitem.product.Price : (int)cartitem.product.PriceSale)</td>
 										<td class="product-quantity"><input type="number" asp-for="@cartitem.quantity" id="@($"quantity-{cartitem.product.Fruit_ID}")"></td>
@@ -70,8 +81,8 @@
 							</tbody>
 						</table>
 						<div class="cart-buttons">
-							@*--<a data-productid="@Model.product.ProductId" class="boxed-btn">Update Cart</a>--*@
-							<a asp-controller="Product" asp-action="Checkout class="boxed-btn black">Check Out</a>
+							
+							<a asp-controller="Fruits" asp-action="Checkout" class="boxed-btn black">Check Out</a>
 						</div>
 					</div>
 
@@ -102,13 +113,14 @@
 				var quantity = $("#quantity-" + productid).val();
 				$.ajax({
 					type: "POST",
-					url:"@Url.RouteUrl("updatecart")",
+					url: '/Fruits/UpdateCart',
 					data: {
 						productid: productid,
 						quantity:quantity
 					},
 					success: function (result) {
-						window.location.href = "@Url.RouteUrl("cart")";
+						
+						window.location.href = "@Url.RouteUrl("Fruits/cart")";
 					}
 				});
 			});

@@ -9,7 +9,7 @@ namespace FruitsShop.Models
     public class Slide
     {
         [Key]
-        public int? SlideId { get; set; }
+        public int SlideId { get; set; }
         public string? Title { get; set; }
         public string? Description { get; set; }
         public string? Images { get; set; }

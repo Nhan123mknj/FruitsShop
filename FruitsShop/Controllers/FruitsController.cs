@@ -4,6 +4,7 @@ using FruitsShop.Models;
 using X.PagedList;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace FruitsShop.Controllers
 {
@@ -54,8 +55,8 @@ namespace FruitsShop.Controllers
 			return View(post);
 		}
 
-		[Route("/addcart/{productid:int}", Name = "addcart")]
-		public IActionResult AddToCart([FromRoute] int productid)
+		/*[Route("/addcart/{productid:int}", Name = "addcart")]*/
+		public IActionResult AddToCart(int productid)
 		{
 
 			var product = _context.Fruits
@@ -102,7 +103,7 @@ namespace FruitsShop.Controllers
 		}
 
 		/// Cập nhật
-		[Route("/updatecart", Name = "updatecart")]
+		
 		[HttpPost]
 		public IActionResult UpdateCart([FromForm] int productid, [FromForm] int quantity)
 		{
@@ -127,13 +128,13 @@ namespace FruitsShop.Controllers
 			return View(GetCartItems());
 		}
 
-		[Route("/checkout")]
+		
 		public IActionResult CheckOut()
 		{
 			// Xử lý khi đặt hàng
 			return View(GetCartItems());
 		}
-		public bool Order(string name, string phone, string address)
+		public bool Order(string name, string phone, string address,string email)
 		{
 			// Xử lý khi đặt hàng thành công
 			try
@@ -157,12 +158,13 @@ namespace FruitsShop.Controllers
 				}
 				var order = new Orders();
 				order.Customers.Name_customer = name;
-				order.Customers.Phonen_number = phone;
+				order.Customers.Phone_number = phone;
+				order.Customers.Email = email;
 				order.Customers.Address = address;
 				order.Total_amount = totalAmount;
 				order.Order_Date = DateTime.Now;
 				_context.Orders.Add(order);
-				_context.SaveChanges();
+				
 				int orderId = order.Orders_id;
 				foreach (var item in cart)
 				{
@@ -174,6 +176,7 @@ namespace FruitsShop.Controllers
 					_context.OrderItems.Add(orderDetail);
 					_context.SaveChanges();
 				}
+				_context.SaveChanges();
 				ClearCart();
 				return true;
 			}

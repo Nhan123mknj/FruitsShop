@@ -35,7 +35,7 @@
 						<form action="index.html">
 							<input type="number" placeholder="1">
 						</form>
-						<a class="cart-btn" data-product-id="@Model.Fruit_ID"><i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
+						<a class="cart-btn" data-productid="@Model.Fruit_ID"><i class="fas fa-shopping-cart"></i> Thêm vào giỏ hàng</a>
 						<p><strong>Danh mục:</strong>@Model.CategoryProduct?.Name_Category</p>
 					</div>
 					<h4>Share:</h4>
@@ -84,24 +84,3 @@
 <!-- more products -->
 @await Component.InvokeAsync("Product_Menu")
 <!-- end more products -->
-<script>
-	$(document).ready(function () {
-		$('.cart-btn').on('click', function () {
-			var productId = $(this).data('product-id');
-
-			// Make an AJAX request to the AddToCart action
-			$.ajax({
-				url: '/addcart/' + productId,
-				type: 'GET',
-				success: function (data) {
-					// Handle success (if needed)
-					console.log('Item added to cart successfully');
-				},
-				error: function (error) {
-					// Handle errors (if needed)
-					console.error('Error adding item to cart', error);
-				}
-			});
-		});
-	});
-</script>

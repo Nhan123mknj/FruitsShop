@@ -1,5 +1,4 @@
-﻿using FruitsShop.Utilities;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 
 namespace FruitsShop.Areas.Admin.Controllers
@@ -10,6 +9,8 @@ namespace FruitsShop.Areas.Admin.Controllers
     {
         public IActionResult Index()
         {
+            
+           
             return View();
         }
     }

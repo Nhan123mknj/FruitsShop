@@ -5,6 +5,20 @@
 	Layout = "~/Views/Shared/_Layout.cshtml";
 	List<BlogComment> blogComment = ViewBag.blogComment;
 }
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<style>
+	.button-1 {
+		background-color: #F28123;
+		border: none !important;
+		color: #051922;
+		font-size: 15px;
+		font-weight: 700;
+		text-transform: uppercase;
+		padding: 15px 25px;
+		border-radius: 200px;
+		
+	}
+</style>
 <div class="breadcrumb-section breadcrumb-bg">
 	<div class="container">
 		<div class="row">
@@ -58,14 +72,14 @@
 
 					<div class="comment-template">
 						<h4>Leave a comment</h4>
-						<p>If you have a comment dont feel hesitate to send us your opinion.</p>
+						<p>Nếu bạn có ý kiến ​​​​đừng ngần ngại gửi cho chúng tôi ý kiến ​​​​của bạn.</p>
 						<form type="POST"  onSubmit="return valid_datas(this);">
 							<p>
 								<input id="name"type="text" placeholder="Your Name">
 								<input id="email"type="email" placeholder="Your Email">
 							</p>
 							<p><textarea name="comment" id="message" cols="30" rows="10" placeholder="Your Message"></textarea></p>
-							<input type="submit" value="Submit" id="send">
+							<input class="button-1" type="button" value="Submit" id="send">
 						</form>
 					</div>
 				</div>
@@ -89,16 +103,15 @@
 		</div>
 	</div>
 </div>
-@section Scripts{
 	<script>
 		$(document).ready(function () {
 			$("#send").click(function () {
 				// Get input values
-				_id = $("#blog_id").val();
-				_name = $("#name").val();
-				_email = $("#email").val();
-				_message = $("#message").val();
-
+				var _id = $("#blog_id").val();
+				var _name = $("#name").val();
+				var _email = $("#email").val();
+				var _message = $("#message").val();
+				
 				// Check if any field is empty
 				if (!_name || !_email || !_message) {
 					toastr.error('Please fill in all fields');
@@ -130,8 +143,9 @@
 								'</div>';
 
 							// Append the new comment to the comment section
+					
 							$("#blog_comment").append(_sHtml);
-
+					
 							// Show success message
 							toastr.success('Gửi thành công');
 						} else {
@@ -143,4 +157,3 @@
 			});
 		});
 	</script>
-}

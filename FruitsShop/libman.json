@@ -1,0 +1,19 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+
+
+
+    {
+      "provider": "cdnjs",
+      "library": "jquery@3.7.1",
+      "destination": "wwwroot/admin/lib/jquery/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "elfinder@2.1.64",
+      "destination": "wwwroot/admin/lib/elfinder/"
+    }
+  ]
+}

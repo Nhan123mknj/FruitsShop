@@ -15,6 +15,5 @@ namespace FruitsShop.Models
 		public int? Phone { get; set; }
 		public string? Email { get; set; }
 		public bool? IsActive { get; set; }
-		public int Role_Id { get; set; }
 	}
 }
