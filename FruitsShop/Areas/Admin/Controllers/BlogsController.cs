@@ -16,15 +16,13 @@ namespace FruitsShop.Areas.Admin.Controllers
             {
                 _context = context;
             }
-            public IActionResult Index()
-            {
-                var mnList = _context.Blogs.OrderBy(m => m.Blog_ID).ToList();
-            if (!Functions.IsLogin())
-                return RedirectToAction("Index", "Login");
+        public IActionResult Index()
+        {
+            var mnList = _context.Blogs.OrderBy(m => m.Blog_ID).ToList();
+
 
             return View(mnList);
-
-            }
+        }
             // GET: Hiển thị form để tạo menu mới
             public IActionResult Create()
             {

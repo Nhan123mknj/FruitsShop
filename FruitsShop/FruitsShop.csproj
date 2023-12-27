@@ -21,8 +21,4 @@
     <Folder Include="wwwroot\files\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="wwwroot\admin\lib\elFinder\files\.trash\.gitkeep" />
-  </ItemGroup>
-
 </Project>

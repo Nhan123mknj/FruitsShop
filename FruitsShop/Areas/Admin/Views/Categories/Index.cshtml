@@ -13,7 +13,7 @@
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
-            <!-- Sidebar Toggle (Topbar) -->
+            
             <form class="form-inline">
                 <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                     <i class="fa fa-bars"></i>
@@ -275,7 +275,10 @@
                                            asp-route-id="@item.Categories_id" class="text-primary">@item.Name_Category</a>
                                         </td>
                                         <td>@item.Title</td>
-                                        <td>@Html.CheckBoxFor(modelItem => item.Is_Active)</td>
+                                        <td><div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="isActiveCheckbox_@item.Categories_id" data-id="@item.Categories_id" data-isactive="@item.Is_Active.ToString().ToLower()" checked="@item.Is_Active" />
+                                                <label class="custom-control-label" for="isActiveCheckbox_@item.Categories_id"></label>
+                                            </div></td>
                                         <td>@item.CreatedDate</td>
                                         <td>@item.CreatedBy</td>
                                         <td>@item.ModifiedDate</td>
@@ -284,9 +287,8 @@
                                             <a asp-area="Admin" asp-controller="Categories" asp-action="Edit"
                                            asp-route-id="@item.Categories_id" class="btn btn-primary btn-sm"
                                                title="Sửa nội dung bài viết"><i class="fa-solid fa-square-pen"></i></a>
-                                            <a asp-area="Admin" asp-controller="Categories" asp-action="Delete"
-                                           asp-route-id="@item.Categories_id" class="btn btn-danger btn-sm"
-                                               title="Xóa thông tin bài viết"><i class="fa-solid fa-trash"></i></a>
+                                            <a data-id="@item.Categories_id" class="btn btn-danger btn-sm btn-delete"
+                                               title="Xóa sản phẩm"><i class="fa-solid fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 }
@@ -312,4 +314,60 @@
     <!-- End of Footer -->
 
 </div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".btn-delete").click(function (e) {
+                // Prevent the default behavior of the anchor element
+                e.preventDefault();
+
+                _id = $(this).data("id");
+
+                if (confirm("Bạn có muốn xóa không")) {
+                    $.ajax({
+                        url: "/Admin/Categories/Delete",
+                        type: "POST",
+                        data: { id: _id },
+                        success: function (result) {
+                            if (result) {
+                                // Remove the table row without reloading the page
+                                $("#tr_" + _id).remove();
+                                toastr.success('Xóa thành công');
+                            }
+                            else {
+                                toastr.error('Xóa không thành công');
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+<script>
+    $(document).ready(function () {
+        $(".custom-control-input").change(function () {
+            var _id = $(this).data("id");
+            var isChecked = $(this).prop("checked");
+
+            // Gửi yêu cầu AJAX để cập nhật trạng thái IsActive
+            $.ajax({
+                url: "/admin/Categories/toggleIsActive",
+                type: "POST",
+                data: { id: _id, isActive: isChecked },
+                success: function (result) {
+                    if (result) {
+                        // Cập nhật giao diện người dùng
+                        $(".custom-control-input[data-id='" + _id + "']").data("isactive", isChecked);
+                        toastr.success('Đã cập nhật trạng thái');
+                    } else {
+                        toastr.error('Cập nhật không thành công');
+                    }
+                }
+            });
+        });
+    });
+
+</script>
+
 

@@ -1,19 +1,26 @@
-﻿using elFinder.NetCore.Drivers.FileSystem;
+﻿using System;
+using System.IO;
+using System.Threading.Tasks;
+using elFinder.NetCore.Drivers.FileSystem;
 using elFinder.NetCore;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
 namespace FruitsShop.Areas.Admin.Controllers
 {
+    // [Authorize] - bỏ comment user phải đăng nhập mới dùng được
     [Area("Admin")]
     [Route("/Admin/el-finder-file-system")]
     public class FileSystemController : Controller
     {
-
-
-        readonly IWebHostEnvironment _env;
+        IWebHostEnvironment _env;
         public FileSystemController(IWebHostEnvironment env) => _env = env;
+
+        // Url để client-side kết nối đến backend
+        // /el-finder-file-system/connector
         [Route("connector")]
         public async Task<IActionResult> Connector()
         {
@@ -21,9 +28,9 @@ namespace FruitsShop.Areas.Admin.Controllers
             var result = await connector.ProcessAsync(Request);
             if (result is JsonResult)
             {
-                 var json = result as JsonResult;
+                var json = result as JsonResult;
                 return Content(JsonSerializer.Serialize(json.Value), json.ContentType);
-                
+
             }
             else
             {
@@ -53,7 +60,7 @@ namespace FruitsShop.Areas.Admin.Controllers
             // .. ... wwww/files
             string rootDirectory = Path.Combine(_env.WebRootPath, pathroot);
 
-            // https://localhost:5001/files/
+
             string url = $"/{pathroot}/";
             string urlthumb = $"{uri.Scheme}://Admin/el-finder-file-system/thumb/";
 

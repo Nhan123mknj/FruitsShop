@@ -10,7 +10,7 @@ namespace FruitsShop.Areas.Admin.Controllers
     public class MenuController : Controller
     {
 
-            private readonly DataContext _context;
+        private readonly DataContext _context;
             public MenuController(DataContext context)
             {
                 _context = context;

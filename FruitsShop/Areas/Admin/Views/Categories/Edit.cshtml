@@ -1,9 +1,8 @@
-﻿@model FruitsShop.Models.CategoryFruit;
+﻿@model FruitsShop.Models.CategoryFruit
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-
 <style>
     /* Import Google font - Poppins */
 
@@ -106,7 +105,7 @@
         font-size: 1rem;
     }
 
-    .form btn {
+    .form button {
         height: 40px;
         width: 20%;
         color: #fff;
@@ -119,55 +118,57 @@
         background: rgb(130, 106, 251);
     }
 
-    .form button:hover {
-        background: rgb(88, 56, 250);
-    }
+        .form button:hover {
+            background: rgb(88, 56, 250);
+        }
     /*Responsive*/
 
 
 </style>
 
 <section class="container">
-    <header>Chỉnh sửa danh mục</header>
-    <form class="form" method="post" asp-action="Edit">
+    <header>Chỉnh sửa menu</header>
+    <form class="form" method="post" asp-controller="Categories" asp-action="Edit">
         <div class="input-box">
             <input type="text" asp-for="Categories_id" type="hidden">
         </div>
         <div class="input-box">
-            <label asp-for="Name_Category">Name_Category</label>
-            <input type="text" asp-for=" Name_Category" placeholder="Nhập tên danh mục" required />
+            <label asp-for="Name_Category">Ten danh muc</label>
+            <input type="text" asp-for="Name_Category" placeholder="Nhập danh muc" required />
             <span asp-validation-for="Name_Category" class=" alert-danger"></span>
         </div>
-        <div class="input-box address">
+
+        <div class="input-box">
             <label asp-for="Title">Title</label>
-            <input type="text" class="form-control mb-3" asp-for="Title" placeholder="Nhập title">
+            <input type="text" class="form-control mb-3" asp-for="Title" placeholder="Enter Link">
             <span asp-validation-for="Title" class=" alert-danger"></span>
         </div>
-        <div class="column">
-            <div class="input-box">
-                <label asp-for="ModifiedDate">Ngày sửa</label>
-                <input type="date" class="form-control mb-3" asp-for="ModifiedDate" placeholder="">
-                <span asp-validation-for="ModifiedDate" class=" alert-danger"></span>
-            </div>
-            <div class="input-box">
-                <label asp-for="ModifiedBy">Người sửa</label>
-                <input type="text" class="form-control mb-3" asp-for="ModifiedBy" placeholder="Nam">
-                <span asp-validation-for="ModifiedBy" class=" alert-danger"></span>
-            </div>
+        <div class="input-box">
+            <label asp-for="ModifiedBy">Nguoi tao</label>
+            <input type="text" class="form-control mb-3" asp-for="ModifiedBy" placeholder="Enter Abstract">
+            <span asp-validation-for="ModifiedBy" class=" alert-danger"></span>
         </div>
+        <div class="input-box">
+            <label asp-for="ModifiedDate">Ngay tao</label>
+            <input type="date" class="form-control mb-3" asp-for="ModifiedDate" placeholder="Enter Depict">
+            <span asp-validation-for="ModifiedDate" class=" alert-danger"></span>
+        </div>
+        
         <div class="gender-box">
             <h3>Active</h3>
             <div class="gender-option">
                 <div class="gender">
-                    @Html.CheckBox("IsActive", Model.Is_Active)
+                    @Html.CheckBox("Is_Active",Model.Is_Active)
                     <label for="check-male">Hiện thị</label>
                 </div>
             </div>
         </div>
+       
         <div class="button_1">
             <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-plus-fill"></i>Lưu</button>
             <a asp-controller="Categories" asp-action="Index" class="btn btn-lg btn-warning" p-2>Quay lại</a>
         </div>
     </form>
 </section>
+
 

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-
 namespace FruitsShop.Areas.Admin.Controllers
 {
     [Area("Admin")]
@@ -9,8 +8,6 @@ namespace FruitsShop.Areas.Admin.Controllers
     {
         public IActionResult Index()
         {
-            
-           
             return View();
         }
     }

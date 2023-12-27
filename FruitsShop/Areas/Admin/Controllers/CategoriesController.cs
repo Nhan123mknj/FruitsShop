@@ -1,11 +1,12 @@
 ﻿using FruitsShop.Models;
+using FruitsShop.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using FruitsShop.Utilities;
 
 namespace FruitsShop.Areas.Admin.Controllers
 {
+
     [Area("Admin")]
     public class CategoriesController : Controller
     {
@@ -18,20 +19,18 @@ namespace FruitsShop.Areas.Admin.Controllers
         public IActionResult Index()
         {
             var mnList = _context.Categories.OrderBy(m => m.Categories_id).ToList();
-            if (!Functions.IsLogin())
-                return RedirectToAction("Index", "Login");
+
 
             return View(mnList);
-
         }
         // GET: Hiển thị form để tạo menu mới
         public IActionResult Create()
         {
-            var mnList = (from m in _context.Categories
+            var mnList = (from m in _context.Blogs
                           select new SelectListItem()
                           {
-                              Text = m.Name_Category,
-                              Value = m.Categories_id.ToString(),
+                              Text = m.Title,
+                              Value = m.Blog_ID.ToString(),
                           }).ToList();
             mnList.Insert(0, new SelectListItem()
             {
@@ -64,7 +63,7 @@ namespace FruitsShop.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var mn = _context.Categories.Find(id);
+            var mn = _context.Blogs.Find(id);
             if (mn == null)
             {
                 return NotFound();
@@ -75,24 +74,24 @@ namespace FruitsShop.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            var deleMenu = _context.Categories.Find(id);
-            if (deleMenu == null)
+            var deleBlog = _context.Blogs.Find(id);
+            if (deleBlog == null)
             {
                 return NotFound();
             }
-            _context.Categories.Remove(deleMenu);
+            _context.Blogs.Remove(deleBlog);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Categories == null)
+            if (id == null || _context.Blogs == null)
             {
                 return NotFound();
             }
 
-            var tbMenu = await _context.Categories.FirstOrDefaultAsync(m => m.Categories_id == id);
+            var tbMenu = await _context.Blogs.FirstOrDefaultAsync(m => m.Blog_ID == id);
             if (tbMenu == null)
             {
                 return NotFound();
@@ -115,7 +114,7 @@ namespace FruitsShop.Areas.Admin.Controllers
             var mnList = (from m in _context.Categories
                           select new SelectListItem()
                           {
-                              Text = m.Name_Category,
+                              Text = m.Title,
                               Value = m.Categories_id.ToString(),
                           }).ToList();
             mnList.Insert(0, new SelectListItem()
@@ -133,15 +132,33 @@ namespace FruitsShop.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Cập nhật dữ liệu menu trong cơ sở dữ liệu (sử dụng Entity Framework hoặc phương thức truy cập dữ liệu của bạn)
                 _context.Categories.Update(mn);
                 _context.SaveChanges();
-                return RedirectToAction("Index"); // Chuyển hướng đến trang danh sách menu
+                
+                return RedirectToAction("Index");
             }
-            return View(mn); // Hiển thị biểu mẫu chỉnh sửa với lỗi kiểm tra
+            return View(mn);
         }
 
         //End Edit
+        public IActionResult ToggleIsActive(int id)
+        {
+            var blog = _context.Blogs.Find(id);
 
+            if (blog != null)
+            {
+
+                blog.IsActive = !blog.IsActive;
+
+
+                _context.SaveChanges();
+
+
+                return Json(true);
+            }
+
+
+            return Json(false);
+        }
     }
 }

@@ -3,17 +3,21 @@
   "defaultProvider": "cdnjs",
   "libraries": [
 
-
-
     {
       "provider": "cdnjs",
-      "library": "jquery@3.7.1",
-      "destination": "wwwroot/admin/lib/jquery/"
+      "library": "jqueryui@1.13.2",
+      "destination": "wwwroot/admin/lib/jqueryui/"
     },
     {
       "provider": "cdnjs",
       "library": "elfinder@2.1.64",
       "destination": "wwwroot/admin/lib/elfinder/"
     }
-  ]
+  ,
+{
+  "provider": "cdnjs",
+  "library": "summernote@0.8.20",
+  "destination": "wwwroot/admin/lib/snote/"
+}
+]
 }

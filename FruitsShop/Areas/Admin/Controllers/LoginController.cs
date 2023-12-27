@@ -11,7 +11,7 @@ namespace FruitsShop.Areas.Admin.Controllers
 	public class LoginController : Controller
 	{
 		private readonly DataContext _context;
-        private readonly ILogger<LoginController> _logger;
+		private readonly ILogger<LoginController> _logger;
 
         public LoginController(DataContext context, ILogger<LoginController> logger)
         {

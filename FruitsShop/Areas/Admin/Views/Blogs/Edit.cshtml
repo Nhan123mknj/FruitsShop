@@ -3,8 +3,6 @@
     ViewData["Title"] = "Edit";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-
-
 <style>
     /* Import Google font - Poppins */
 
@@ -129,12 +127,14 @@
 </style>
 
 <section class="container">
-    <header>Thêm mới sản phẩm</header>
-    <form class="form" method="post" >
-
+    <header>Chỉnh sửa menu</header>
+    <form class="form" method="post" asp-action="Edit">
         <div class="input-box">
-            <label asp-for="Title">Title</label>
-            <input type="text" asp-for=" Title" placeholder="Title" required />
+            <input type="text" asp-for="Blog_ID" type="hidden">
+        </div>
+        <div class="input-box">
+            <label asp-for="Title">MenuName</label>
+            <input type="text" asp-for=" Title" placeholder="Nhập title" required />
             <span asp-validation-for="Title" class=" alert-danger"></span>
         </div>
 
@@ -145,52 +145,42 @@
         </div>
         <div class="input-box">
             <label asp-for="Abstract">Abstract</label>
-            <input type="text" asp-for="Abstract" placeholder="Nhập mô tả" required />
+            <input type="text" class="form-control mb-3" asp-for="Abstract" placeholder="Enter Abstract">
             <span asp-validation-for="Abstract" class=" alert-danger"></span>
         </div>
         <div class="input-box">
             <label asp-for="Depict">Depict</label>
-            <input type="text" asp-for="Depict" placeholder="Depict" required />
+            <input type="text" class="form-control mb-3" asp-for="Depict" placeholder="Enter Depict">
             <span asp-validation-for="Depict" class=" alert-danger"></span>
         </div>
-        <div class="column">
-            <div class="input-box">
-                <label asp-for="CreatedDate">Ngày tạo</label>
-                <input type="date" class="form-control mb-3" asp-for="CreatedDate" placeholder="">
-                <span asp-validation-for="CreatedDate" class=" alert-danger"></span>
-            </div>
-            <div class="input-box">
-                <label asp-for="Author">Tác giả</label>
-                <input type="text" class="form-control mb-3" asp-for="Author" placeholder="Chi tiết">
-                <span asp-validation-for="Author" class=" alert-danger"></span>
-            </div>
+        <div class="input-box">
+            <label asp-for="Depict">Depict</label>
+            <input type="text" class="form-control mb-3" asp-for="Depict" placeholder="Enter Depict">
+            <span asp-validation-for="Depict" class=" alert-danger"></span>
         </div>
-
-        <div class="form-group col-md-12">
-            <label asp-for="Images">Images</label>
-            <textarea asp-for="Images" class="form-control"></textarea>
+        <div class="input-box">
+            <label asp-for="Depict">Depict</label>
+            <input type="text" class="form-control mb-3" asp-for="Depict" placeholder="Enter Depict">
+            <span asp-validation-for="Depict" class=" alert-danger"></span>
         </div>
-        <div class="column">
-            <div class="gender-box">
-                <h3>Active</h3>
-                <div class="gender-option">
-                    <div class="gender">
-                        @Html.CheckBox("IsActive",false)
-                        <label for="check-male">Hiện thị</label>
-                    </div>
+        <div class="input-box">
+        <label asp-for="Author">Tac gia</label>
+        <input type="text" class="form-control mb-3" asp-for="Author" placeholder="Nhập tên tác giả">
+        <span asp-validation-for="Author" class=" alert-danger"></span>
+        </div>
+        
+        <div class="gender-box">
+            <h3>Active</h3>
+            <div class="gender-option">
+                <div class="gender">
+                    @Html.CheckBox("IsActive", Model.IsActive)
+                    <label for="check-male">Hiện thị</label>
                 </div>
             </div>
         </div>
         <div class="button_1">
             <button type="submit" class="btn btn-lg btn-primary p-2"><i class="bi bi-file-plus-fill"></i>Lưu</button>
-            <a asp-controller="Blogs" asp-action="Index" class="btn btn-lg btn-warning" p-2>Quay lại</a>
+            <a asp-controller="Menu" asp-action="Index" class="btn btn-lg btn-warning" p-2>Quay lại</a>
         </div>
     </form>
 </section>
-
-@{
-    var summernote = new FruitsShop.Areas.Admin.Models.Summernote("#Images");
-
-}
-<partial name="_Summernote" model="summernote" />
-

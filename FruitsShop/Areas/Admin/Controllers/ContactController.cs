@@ -26,39 +26,6 @@ namespace FruitsShop.Areas.Admin.Controllers
 
         }
         // GET: Hiển thị form để tạo menu mới
-        public IActionResult Create()
-        {
-            var mnList = (from m in _context.Contacts
-                          select new SelectListItem()
-                          {
-                              Text = m.Name,
-                              Value = m.ContactId.ToString(),
-                          }).ToList();
-            mnList.Insert(0, new SelectListItem()
-            {
-                Text = "----Select----",
-                Value = "0"
-            });
-            ViewBag.mnList = mnList;
-            return View();
-
-        }
-
-        // POST: Xử lý việc tạo menu mới
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(Contact mn)
-        {
-            if (ModelState.IsValid)
-            {
-                // Lưu menu vào cơ sở dữ liệu (ví dụ: sử dụng Entity Framework)
-                _context.Contacts.Add(mn);
-                _context.SaveChanges();
-                return RedirectToAction("Index"); // Chuyển hướng sau khi thêm thành công
-            }
-            return View(mn);
-        }
-
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)
