@@ -12,12 +12,16 @@
       "provider": "cdnjs",
       "library": "elfinder@2.1.64",
       "destination": "wwwroot/admin/lib/elfinder/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "jquery@3.3.1",
+      "destination": "wwwroot/admin/jquery/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "summernote@0.8.18",
+      "destination": "wwwroot/admin/lib/summernote/"
     }
-  ,
-{
-  "provider": "cdnjs",
-  "library": "summernote@0.8.20",
-  "destination": "wwwroot/admin/lib/snote/"
-}
-]
+  ]
 }
